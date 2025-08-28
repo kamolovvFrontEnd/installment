@@ -12,7 +12,8 @@ public class InstallmentController(InstallmentService installmentService) : Cont
     {
         try
         {
-            return Ok(installmentService.Installments(product, price, phoneNumber, installment));
+            IResult result = installmentService.Installments(product, price, phoneNumber, installment); 
+            return Ok(result);
         }
         catch (ArgumentException e)
         {
