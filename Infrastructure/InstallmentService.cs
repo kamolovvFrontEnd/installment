@@ -4,13 +4,19 @@ public class InstallmentService
 {
     public IResult Installments(string product, int price, string phoneNumber, int installment)
     {
+        if (price <= 100)
+            return Results.BadRequest("Price must be greater than 100");
+        
         string[] validProducts = ["phone", "computer", "tv"];
         if (!validProducts.Contains(product))
             return Results.BadRequest("Incorrect product!"); 
 
         int[] validInstallments = [3, 6, 9, 12, 18, 24];
         if (!validInstallments.Contains(installment))
-            return Results.BadRequest("Incorrect installment!"); 
+            return Results.BadRequest("Incorrect installment!");
+
+        if (phoneNumber.Length is not 9)
+            return Results.BadRequest("Incorrect phoneNumber! Should be 9 digits!");
 
         double extraFee = 0;
         string productName = product switch
@@ -41,8 +47,12 @@ public class InstallmentService
 
         double total = price + extraFee;
 
-        return Results.Ok(
-                $"Вы купили {productName} за {price} сомони в рассрочку на {installment} месяцев. Итоговая сумма: {total} сомони.");
+        return Results.Ok( new 
+        {
+            message =
+                $"Вы купили {productName} за {price} сомони в рассрочку на {installment} месяцев. Итоговая сумма: {total} сомони.",
+            phoneNumber = $"+992 {phoneNumber}",
+        });
     }
     
     public static double PercentOf(double amount, double percent)
