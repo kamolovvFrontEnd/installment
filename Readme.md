@@ -11,7 +11,7 @@
 
 <hr />
 
-Добавил Controller и Service, в Service вся логика, а Controller просто запускает.
+Добавил Controller и Service, в Service вся логика, Controller просто запускает.
 Controller находиться в папке "Controller", а Service находиться в папке "Infrastructure".
 
 <hr />
